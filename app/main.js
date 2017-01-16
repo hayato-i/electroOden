@@ -188,7 +188,7 @@ window.onload = function(){
 		// = 行列の計算 =========================================================== *
 		// モデル座標変換行列
 		m.identity(mMatrix);
-		m.rotate(mMatrix, rad, [0.0, 1.0, 1.0], mMatrix);
+		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		m.translate(mMatrix, [0.0, 1.0, 0.0], mMatrix);
 		m.rotate(mMatrix, Math.PI/2,[0.0, 0.0, 1.0], mMatrix);
 		m.scale(mMatrix,[0.6, 0.6, 0.6],mMatrix);
@@ -216,7 +216,7 @@ window.onload = function(){
 		// = 行列の計算 =========================================================== *
 		// モデル座標変換行列
 		m.identity(mMatrix);
-		m.rotate(mMatrix, rad, [0.0, 1.0, 1.0], mMatrix);
+		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		m.scale(mMatrix,[0.7, 0.7, 0.7],mMatrix);
 		m.multiply(vpMatrix, mMatrix, mvpMatrix);
 		m.inverse(mMatrix, invMatrix);
@@ -243,7 +243,7 @@ window.onload = function(){
 		// = 行列の計算 =========================================================== *
 		// モデル座標変換行列
 		m.identity(mMatrix);
-		m.rotate(mMatrix, rad, [0.0, 1.0, 1.0], mMatrix);
+		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		m.translate(mMatrix, [0.0, -1.07, 0.0], mMatrix);
 		m.rotate(mMatrix, Math.PI/2, [0.0, 0.0, 1.0], mMatrix);
 		m.scale(mMatrix,[0.5, 4.0, 0.5],mMatrix);
@@ -272,7 +272,7 @@ window.onload = function(){
 		// = 行列の計算 =========================================================== *
 		// モデル座標変換行列
 		m.identity(mMatrix);
-		m.rotate(mMatrix, rad, [0.0, 1.0, 1.0], mMatrix);
+		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		m.rotate(mMatrix, Math.PI/2, [1.0, 0.0, .0], mMatrix);
 		m.scale(mMatrix,[0.05, 0.05, 4.0],mMatrix);
 		m.multiply(vpMatrix, mMatrix, mvpMatrix);
