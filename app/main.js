@@ -196,6 +196,7 @@ window.onload = function(){
 		m.identity(mMatrix);
 		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		m.translate(mMatrix, [0.0, 1.0, 0.0], mMatrix);
+		// ここから下は変更なし
 		m.rotate(mMatrix, Math.PI/2,[0.0, 0.0, 1.0], mMatrix);
 		m.scale(mMatrix,[0.6, 0.6, 0.6],mMatrix);
 		m.multiply(vpMatrix, mMatrix, mvpMatrix);
@@ -223,6 +224,7 @@ window.onload = function(){
 		// モデル座標変換行列
 		m.identity(mMatrix);
 		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
+		// ここから下は変更なし
 		m.scale(mMatrix,[0.7, 0.7, 0.7],mMatrix);
 		m.multiply(vpMatrix, mMatrix, mvpMatrix);
 		m.inverse(mMatrix, invMatrix);
@@ -249,9 +251,14 @@ window.onload = function(){
 		// = 行列の計算 =========================================================== *
 		// モデル座標変換行列
 		m.identity(mMatrix);
+		if(flag === true){
+			m.rotate(mMatrix,freq,[0.0,0.0,1.0],mMatrix);
+
+		}
 		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		m.translate(mMatrix, [0.0, -1.07, 0.0], mMatrix);
 		m.rotate(mMatrix, Math.PI/2, [0.0, 0.0, 1.0], mMatrix);
+		// ここから下は変更なし
 		m.scale(mMatrix,[0.5, 4.0, 0.5],mMatrix);
 		m.multiply(vpMatrix, mMatrix, mvpMatrix);
 		m.inverse(mMatrix, invMatrix);
