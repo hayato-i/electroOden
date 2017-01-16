@@ -1,8 +1,14 @@
 var c, gl, vs, fs, run;
+var flag = false;
+var freq = 0;
 
 window.onload = function(){
 	// - keydown イベントへの関数の登録 -------------------------------------------
 	window.addEventListener('keydown', function(eve){run = eve.keyCode !== 27;}, true);
+	window.addEventListener('change',function(eve){
+		flag = true;
+		freq = eve.value;
+	}, false);
 
 
 	// - canvas と WebGL コンテキストの初期化 -------------------------------------
