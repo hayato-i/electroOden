@@ -1,18 +1,17 @@
 
 class AudioManager{
-    constructor(audioContext, oscillatorNode, gainNode, audioDestinationNode){ 
+    constructor(){ 
         window.AudioContext = window.AudioContext||window.webkitAudioContext; //互換対応
         // 音のオブジェクト生成
         this.audioContext = new AudioContext();
-
         // 音の発生源生成
         this.oscillatorNode = this.audioContext.createOscillator();
-        
         // 音の出力先
         this.audioDestinationNode = this.audioContext.destination;
-        
         // ゲイン管理
         this.gainNode = this.audioContext.createGain();
+
+        this.isPlay = false;
     }
 
     init(){
@@ -20,11 +19,11 @@ class AudioManager{
         this.oscillatorNode.type = 'square';
 
         // 音程 A=440Hz
-        var frequency = parseInt(440 * Math.pow(Math.pow(2,1/12), 0), 10);
+        const frequency = parseInt(440 * Math.pow(Math.pow(2,1/12), 0), 10);
         this.oscillatorNode.frequency.value = frequency;
 
         // 音量設定
-        this.gainNode.gain.value = 0;
+        this.gainNode.gain.value = 0.01;
 
         // 音の発生源をgainNodeに接続
         this.oscillatorNode.connect(this.gainNode);
@@ -35,9 +34,16 @@ class AudioManager{
 
     play(){
         // 音を鳴らす
-        this.oscillatorNode.start();
+        if(this.isPlay === false){
+            this.oscillatorNode.start();
+            this.isPlay = true;
+        }
+    }
 
-        // 音を止める
-        setTimeout(function(){this.oscillatorNode.stop(),500})
+    stop(){
+        if(this.isPlay === true){
+            this.oscillatorNode.stop(this.audioContext.currentTime + 0.5);
+            this.isPlay = false;
+        }
     }
 }

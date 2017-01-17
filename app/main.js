@@ -1,4 +1,4 @@
-var c, gl, vs, fs, run, getFreq, cText;
+var c, gl, vs, fs, run, getFreq, cText, bpm;
 var flag = false;
 var freq = 0.0;
 
@@ -7,16 +7,22 @@ window.onload = function(){
 	window.addEventListener('keydown', function(eve){run = eve.keyCode !== 27;}, true);
 	
 	// クリック音用クラス作成と初期化
-	let met = new AudioManager;
+	let met = new AudioManager();
 	met.init();
 
-	var bpm = document.getElementById('bpm');
+	bpm = document.getElementById('bpm');
 	bpm.textContent = freq;
 
 	getFreq = document.getElementById('metronome');
 	getFreq.addEventListener('change',function(eve){
-		flag = true;
-		freq = eve.currentTarget.value;
+		if(eve.currentTarget.value !== 0){
+			flag = true;
+			freq = eve.currentTarget.value;
+		}
+		else if(eve.currentTarget.value === 0){
+			flag = false;
+			freq = eve.currentTarget.value;
+		}
 		bpm.textContent = freq;
 	}, false);
 
@@ -185,8 +191,11 @@ window.onload = function(){
 	// アニメーション用のフラグを立てる
 	run = true;
 
+	//met.play();
+
 	// レンダリング関数のコール
 	render();
+
 
 	function render(){
 		// = ループ内初期化処理 ===================================================
@@ -197,11 +206,15 @@ window.onload = function(){
 		var rad = (count % 360) * Math.PI / 180;
 
 		// スライダーによる傾き速度取得イベント----------------------------------------------------------
-		var aniFreq =  Math.sin(Math.PI*count/7 * freq/1000);
-	
-		// 端に行ったら音が鳴る
-		if(aniFreq===0) {met.play()};
-		
+		var aniFreq =  Math.sin(Math.PI*count/6 * freq/1000);
+
+		if(aniFreq === Math.sin(Math.PI*count%6 * freq/1000) && flag === true){
+			
+			if(){
+				met.play();
+			}
+			met.stop();
+		}
 		// canvasを初期化
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		
