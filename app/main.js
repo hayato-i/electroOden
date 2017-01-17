@@ -208,13 +208,12 @@ window.onload = function(){
 		// スライダーによる傾き速度取得イベント----------------------------------------------------------
 		var aniFreq =  Math.sin(Math.PI*count/6 * freq/1000);
 
-		if(aniFreq === Math.sin(Math.PI*count%6 * freq/1000) && flag === true){
-			
-			if(){
-				met.play();
-			}
+		if(count%360 === 0 && flag === true){
+			met.play();
 			met.stop();
+			met.init();
 		}
+
 		// canvasを初期化
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		

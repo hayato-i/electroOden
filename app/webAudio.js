@@ -19,7 +19,7 @@ class AudioManager{
         this.oscillatorNode.type = 'square';
 
         // 音程 A=440Hz
-        const frequency = parseInt(440 * Math.pow(Math.pow(2,1/12), 0), 10);
+        const frequency = parseInt(880 * Math.pow(Math.pow(2,1/12), 0), 10);
         this.oscillatorNode.frequency.value = frequency;
 
         // 音量設定
@@ -42,7 +42,7 @@ class AudioManager{
 
     stop(){
         if(this.isPlay === true){
-            this.oscillatorNode.stop(this.audioContext.currentTime + 0.5);
+            this.oscillatorNode.stop(this.audioContext.currentTime + 0.1);
             this.isPlay = false;
         }
     }
