@@ -1,15 +1,18 @@
-var c, gl, vs, fs, run;
+var c, gl, vs, fs, run, getFreq, cText;
 var flag = false;
-var freq = 0;
+var freq = 60.0;
 
 window.onload = function(){
 	// - keydown イベントへの関数の登録 -------------------------------------------
 	window.addEventListener('keydown', function(eve){run = eve.keyCode !== 27;}, true);
-	window.addEventListener('change',function(eve){
+	
+	getFreq = document.getElementById('metronome');
+	cText = document.getElementById('bpm');
+	getFreq.addEventListener('change',function(eve){
 		flag = true;
-		freq = eve.value;
+		freq = eve.currentTarget.value;
+		eve.currentTarget.textContent('freq');
 	}, false);
-
 
 	// - canvas と WebGL コンテキストの初期化 -------------------------------------
 	// canvasエレメントを取得
@@ -136,7 +139,6 @@ window.onload = function(){
 	var mvpMatrix = m.identity(m.create());
 	var invMatrix = m.identity(m.create());
 
-
 	// - レンダリングのための WebGL 初期化設定 ------------------------------------
 	// ビューポートを設定する
 	gl.viewport(0, 0, c.width, c.height);
@@ -159,7 +161,7 @@ window.onload = function(){
 	// アニメーション用に変数を初期化
 	var count = 0;
 	var lightDirection = [0.577, 0.577, 0.577];
-
+	var frqT = 3.0;
 
 	// - 行列の計算 ---------------------------------------------------------------
 	// ビュー座標変換行列
@@ -186,7 +188,10 @@ window.onload = function(){
 		
 		// アニメーション用にカウンタからラジアンを計算
 		var rad = (count % 360) * Math.PI / 180;
-		
+
+		// スライダーによる傾き速度取得イベント----------------------------------------------------------
+		var aniFreq =  Math.sin(Math.PI*count/7 * freq/1000);
+	
 		// canvasを初期化
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		
@@ -194,6 +199,13 @@ window.onload = function(){
 		// = 行列の計算 =========================================================== *
 		// モデル座標変換行列
 		m.identity(mMatrix);
+		// スライダー分岐
+		if(flag === true){
+			// 原点回転
+			m.translate(mMatrix, [0.0, -frqT, 0.0], mMatrix);
+			m.rotate(mMatrix, aniFreq, [0.0, 0.0, 1.0], mMatrix);
+			m.translate(mMatrix, [0.0, frqT, 0.0], mMatrix);
+		}
 		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		m.translate(mMatrix, [0.0, 1.0, 0.0], mMatrix);
 		// ここから下は変更なし
@@ -223,6 +235,13 @@ window.onload = function(){
 		// = 行列の計算 =========================================================== *
 		// モデル座標変換行列
 		m.identity(mMatrix);
+		// スライダー分岐
+		if(flag === true){
+			// 原点回転
+			m.translate(mMatrix, [0.0, -frqT, 0.0], mMatrix);
+			m.rotate(mMatrix, aniFreq, [0.0, 0.0, 1.0], mMatrix);
+			m.translate(mMatrix, [0.0, frqT, 0.0], mMatrix);
+		}
 		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		// ここから下は変更なし
 		m.scale(mMatrix,[0.7, 0.7, 0.7],mMatrix);
@@ -251,14 +270,17 @@ window.onload = function(){
 		// = 行列の計算 =========================================================== *
 		// モデル座標変換行列
 		m.identity(mMatrix);
+		// スライダー分岐
 		if(flag === true){
-			m.rotate(mMatrix,freq,[0.0,0.0,1.0],mMatrix);
-
+			// 原点回転
+			m.translate(mMatrix, [0.0, -frqT, 0.0], mMatrix);
+			m.rotate(mMatrix, aniFreq, [0.0, 0.0, 1.0], mMatrix);
+			m.translate(mMatrix, [0.0, frqT, 0.0], mMatrix);
 		}
 		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		m.translate(mMatrix, [0.0, -1.07, 0.0], mMatrix);
-		m.rotate(mMatrix, Math.PI/2, [0.0, 0.0, 1.0], mMatrix);
 		// ここから下は変更なし
+		m.rotate(mMatrix, Math.PI/2, [0.0, 0.0, 1.0], mMatrix);
 		m.scale(mMatrix,[0.5, 4.0, 0.5],mMatrix);
 		m.multiply(vpMatrix, mMatrix, mvpMatrix);
 		m.inverse(mMatrix, invMatrix);
@@ -285,6 +307,13 @@ window.onload = function(){
 		// = 行列の計算 =========================================================== *
 		// モデル座標変換行列
 		m.identity(mMatrix);
+		// スライダー分岐
+		if(flag === true){
+			// 原点回転
+			m.translate(mMatrix, [0.0, -frqT, 0.0], mMatrix);
+			m.rotate(mMatrix, aniFreq, [0.0, 0.0, 1.0], mMatrix);
+			m.translate(mMatrix, [0.0, frqT, 0.0], mMatrix);
+		}
 		m.rotate(mMatrix, rad, [0.0, 1.0, 0.0], mMatrix);
 		m.rotate(mMatrix, Math.PI/2, [1.0, 0.0, .0], mMatrix);
 		m.scale(mMatrix,[0.05, 0.05, 4.0],mMatrix);
