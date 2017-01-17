@@ -15,17 +15,12 @@ window.onload = function(){
 
 	getFreq = document.getElementById('metronome');
 	getFreq.addEventListener('change',function(eve){
-		if(eve.currentTarget.value !== 0){
-			flag = true;
-			freq = eve.currentTarget.value;
-		}
-		else if(eve.currentTarget.value === 0){
-			flag = false;
-			freq = eve.currentTarget.value;
-		}
+		flag = true;
+		freq = eve.currentTarget.value;
 		bpm.textContent = freq;
 	}, false);
 
+	//var bpm = 60/freq*1000;
 
 	// - canvas と WebGL コンテキストの初期化 -------------------------------------
 	// canvasエレメントを取得
@@ -190,9 +185,7 @@ window.onload = function(){
 	// - レンダリング関数 ---------------------------------------------------------
 	// アニメーション用のフラグを立てる
 	run = true;
-
-	//met.play();
-
+	
 	// レンダリング関数のコール
 	render();
 
@@ -206,13 +199,17 @@ window.onload = function(){
 		var rad = (count % 360) * Math.PI / 180;
 
 		// スライダーによる傾き速度取得イベント----------------------------------------------------------
-		var aniFreq =  Math.sin(Math.PI*count/6 * freq/1000);
+		// var aniFreq = Math.sin(Math.PI * count / 4 * freq / 1000);
+		var aniFreq = rad;
+		/*
+		var seFreq = Math.sin(Math.PI * count * freq / 1000);
 
-		if(count%360 === 0 && flag === true){
+		if(flag === true && seFreq%aniFreq==0){
 			met.play();
 			met.stop();
 			met.init();
 		}
+		*/
 
 		// canvasを初期化
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);

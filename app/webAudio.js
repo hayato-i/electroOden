@@ -2,8 +2,12 @@
 class AudioManager{
     constructor(){ 
         window.AudioContext = window.AudioContext||window.webkitAudioContext; //互換対応
+        
         // 音のオブジェクト生成
         this.audioContext = new AudioContext();
+    }
+
+    init(){
         // 音の発生源生成
         this.oscillatorNode = this.audioContext.createOscillator();
         // 音の出力先
@@ -12,9 +16,6 @@ class AudioManager{
         this.gainNode = this.audioContext.createGain();
 
         this.isPlay = false;
-    }
-
-    init(){
         // 音の種類 矩形
         this.oscillatorNode.type = 'square';
 
