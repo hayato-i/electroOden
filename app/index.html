@@ -32,11 +32,13 @@ void main(){
 		</script>
 		<script src="main.js"></script>
 		<script src="minMatrix.js"></script>
+		<script src="webAudio.js"></script>
 		<style>
 			* {
 				margin: 0px;
 				padding: 0px;
 				overflow: hidden;
+				position: relative;
 			}
 			html, body{
 				width: 100%;
@@ -45,9 +47,9 @@ void main(){
 		</style>
 	</head>
 	<body>
+		<title>MetrOden</title>
 		<canvas id="canvas"></canvas>
-		<p>BPM:None</p>
-		<input type="range" id="metronome" style="position:static; left:50px; bottom:100px;" 
-		       value="60"  min="0" max="400">
+		<p>BPM:</p><p id ="bpm">None</p>
+		<input type="range" id="metronome" value="0"  min="0" max="400">
 	</body>
 </html>

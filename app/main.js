@@ -1,18 +1,25 @@
 var c, gl, vs, fs, run, getFreq, cText;
 var flag = false;
-var freq = 60.0;
+var freq = 0.0;
 
 window.onload = function(){
 	// - keydown イベントへの関数の登録 -------------------------------------------
 	window.addEventListener('keydown', function(eve){run = eve.keyCode !== 27;}, true);
 	
+	// クリック音用クラス作成と初期化
+	let met = new AudioManager;
+	met.init();
+
+	var bpm = document.getElementById('bpm');
+	bpm.textContent = freq;
+
 	getFreq = document.getElementById('metronome');
-	cText = document.getElementById('bpm');
 	getFreq.addEventListener('change',function(eve){
 		flag = true;
 		freq = eve.currentTarget.value;
-		eve.currentTarget.textContent('freq');
+		bpm.textContent = freq;
 	}, false);
+
 
 	// - canvas と WebGL コンテキストの初期化 -------------------------------------
 	// canvasエレメントを取得
@@ -192,6 +199,9 @@ window.onload = function(){
 		// スライダーによる傾き速度取得イベント----------------------------------------------------------
 		var aniFreq =  Math.sin(Math.PI*count/7 * freq/1000);
 	
+		// 端に行ったら音が鳴る
+		if(aniFreq===0) {met.play()};
+		
 		// canvasを初期化
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		
