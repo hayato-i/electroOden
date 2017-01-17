@@ -8,6 +8,7 @@ window.onload = function(){
 	
 	// クリック音用クラス作成と初期化
 	let met = new AudioManager();
+	let seFlag = false;
 	met.init();
 
 	bpm = document.getElementById('bpm');
@@ -15,8 +16,13 @@ window.onload = function(){
 
 	getFreq = document.getElementById('metronome');
 	getFreq.addEventListener('change',function(eve){
-		flag = true;
 		freq = eve.currentTarget.value;
+		if(freq == 0){
+			flag = false;
+		}
+		else if(freq != 0){
+			flag = true;
+		}
 		bpm.textContent = freq;
 	}, false);
 
@@ -199,17 +205,20 @@ window.onload = function(){
 		var rad = (count % 360) * Math.PI / 180;
 
 		// スライダーによる傾き速度取得イベント----------------------------------------------------------
-		// var aniFreq = Math.sin(Math.PI * count / 4 * freq / 1000);
-		var aniFreq = rad;
-		/*
-		var seFreq = Math.sin(Math.PI * count * freq / 1000);
+		var aniFreq = Math.sin(Math.PI * count / 4 * freq / 1000);
 
-		if(flag === true && seFreq%aniFreq==0){
-			met.play();
-			met.stop();
-			met.init();
+		if(flag === true && Math.abs(aniFreq) >= 0.95){
+			if(seFlag===false){
+				met.play();
+				met.stop();
+				met.init();
+				seFlag = true;
+			}
 		}
-		*/
+		else {
+			seFlag = false;
+		}
+		
 
 		// canvasを初期化
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
